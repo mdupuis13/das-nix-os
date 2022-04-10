@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # install git + z shell 
-apt-get install git zsh
+apt-get install git zsh zsh-autosuggestions zsh-syntax-highlighting
 
 # create and move into $HOME/src/$USER
 
