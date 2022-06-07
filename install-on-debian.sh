@@ -2,7 +2,7 @@
 
 # install git + z shell 
 echo "Installing base programs (git, zsh)"
-apt-get install git zsh
+apt-get install git stow zsh 
 
 echo "Set zsh as default shell"
 chsh -s $(which zsh) $USER
