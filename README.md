@@ -11,7 +11,7 @@ Install [curl](https://everything.curl.dev/) to download the raw script related 
 <dd>Script file corresponding to your base OS of choice.</dd>
 
 <dt>Config files</dt> 
-<dd>_dotfiles_ contained in a separate repository</dd>
+<dd>dotfiles contained in a separate repository</dd>
 
 <dt>Environment variables</dt> 
 <dd>Some environment variables are needed for the successful completion of the script.</dd>
@@ -23,9 +23,9 @@ Config files are read from a *dotfiles* repo.
 
 Set the DOTFILES_GIT_REPO environment variable set to fetch your own dotfiles, otherwise it fetches my own configs.<br/>
 ```bash
-export DOTFILES_GIT_REPO=https://github.com/<your_user>/<your_dotfiles_repo>.git
+export DOTFILES_GIT_REPO=<url to your dotfiles repo>
 ```
-This dotfiles repo should be configured using [GNU Stow](https://www.gnu.org/software/stow/).<br/>
+This dotfiles repo should be configured to use [GNU Stow](https://www.gnu.org/software/stow/).<br/>
 
 ### How to use GNU Stow
 [Managing Dotfiles with GNU Stow - Steven R. Baker](https://www.stevenrbaker.com/tech/managing-dotfiles-with-gnu-stow.html)<br/>
@@ -33,10 +33,10 @@ This dotfiles repo should be configured using [GNU Stow](https://www.gnu.org/sof
 
 
 
-## development environment
+## Development environment
 A base development environment can also be setup from a separate repo.
 ```bash
-export DEVENV_GIT_REPO=https://github.com/<your_user>/<your_dev_repo>.git
+export DEVENV_GIT_REPO=<url to your dev repo>
 ```
 
 
