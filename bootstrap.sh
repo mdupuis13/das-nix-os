@@ -13,16 +13,16 @@ if [ `id -u` -ne 0 ]; then
 fi
 
 # get latest packages
-#apt update
+apt update
 
 # install alternative package manager
-#apt install nala
+apt install nala
 
 # get latest packages
-#nala upgrade --assume-yes
+nala upgrade --assume-yes
 
 # install latest version available of git
-#nala install git --assume-yes
+nala install git --assume-yes
 
 
 # create folder and move into $HOME/src/$USER
@@ -38,5 +38,5 @@ pushd $config_folder
 popd
 
 if [ -x das-nix-os/install-on-debian.sh ]; then
-  echo launching das-nix-os/install-on-debian.sh...
+  echo launching das-nix-os/install-on-debian.sh...  
 fi
