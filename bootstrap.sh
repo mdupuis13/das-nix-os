@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-realuser=$(id -u $(logname))
+realuser=$(logname)
 
 error() {
   printf '\E[31m'; echo "$@"; printf '\E[0m'
@@ -26,7 +26,7 @@ nala install git --assume-yes
 
 
 # create folder and move into $HOME/src/$USER
-config_folder=$HOME/src/$USER
+config_folder=/home/$realuser/src/
 mkdir -p $config_folder
 
 pushd $config_folder
