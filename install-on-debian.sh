@@ -8,10 +8,10 @@ echo "Set zsh as default shell"
 chsh -s $(which zsh) $USER
 
 # create folder and move into $HOME/src/$USER
-base_src_folder=$HOME/src/$USER
-mkdir -p $base_src_folder
+config_folder=$HOME/src/$USER
+mkdir -p $config_folder
 
-pushd $base_src_folder
+pushd $config_folder
     # clone das-nix-os repo
     git clone https://github.com/mdupuis13/das-nix-os.git das-nix-os
 
