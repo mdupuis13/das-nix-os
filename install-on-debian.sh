@@ -8,7 +8,7 @@ echo "Set zsh as default shell"
 chsh -s $(which zsh) $USER
 
 # create folder and move into $HOME/src/$USER
-config_folder=$HOME/src/$USER
+config_folder=$HOME/src/github
 mkdir -p $config_folder
 
 pushd $config_folder
@@ -16,7 +16,7 @@ pushd $config_folder
     git clone https://github.com/mdupuis13/das-nix-os.git das-nix-os
 
     # clone dotfilez-dasboss-pc repo
-    git clone https://github.com/mdupuis13/dotfiles.git dotfiles
+    git clone https://github.com/mdupuis13/dotfiles.git .dotfiles
 popd
 
 

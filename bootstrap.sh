@@ -12,17 +12,93 @@ if [ `id -u` -ne 0 ]; then
   exit -1
 fi
 
-# get latest packages
-apt update
+lowercase(){
+    echo "$1" | tr '[A-Z]' '[a-z]'
+}
 
-# install alternative package manager
-apt install nala
+# All this to detec which OS is running !
+OS=`lowercase \`uname\``
+KERNEL=`uname -r`
+MACH=`uname -m`
 
-# get latest packages
-nala upgrade --assume-yes
+if [ "{$OS}" == "windowsnt" ]; then
+    OS=windows
+elif [ "{$OS}" == "darwin" ]; then
+    OS=mac
+else
+    OS=`uname`
+    if [ "${OS}" = "SunOS" ] ; then
+        OS=Solaris
+        ARCH=`uname -p`
+        OSSTR="${OS} ${REV}(${ARCH} `uname -v`)"
+    elif [ "${OS}" = "AIX" ] ; then
+        OSSTR="${OS} `oslevel` (`oslevel -r`)"
+    elif [ "${OS}" = "Linux" ] ; then
+        if [ -f /etc/redhat-release ] ; then
+            DistroBasedOn='RedHat'
+            DIST=`cat /etc/redhat-release |sed s/\ release.*//`
+            PSEUDONAME=`cat /etc/redhat-release | sed s/.*\(// | sed s/\)//`
+            REV=`cat /etc/redhat-release | sed s/.*release\ // | sed s/\ .*//`
+        elif [ -f /etc/SuSE-release ] ; then
+            DistroBasedOn='SuSe'
+            PSEUDONAME=`cat /etc/SuSE-release | tr "\n" ' '| sed s/VERSION.*//`
+            REV=`cat /etc/SuSE-release | tr "\n" ' ' | sed s/.*=\ //`
+        elif [ -f /etc/mandrake-release ] ; then
+            DistroBasedOn='Mandrake'
+            PSEUDONAME=`cat /etc/mandrake-release | sed s/.*\(// | sed s/\)//`
+            REV=`cat /etc/mandrake-release | sed s/.*release\ // | sed s/\ .*//`
+        elif [ -f /etc/debian_version ] ; then
+            DistroBasedOn='Debian'
+            DIST=`cat /etc/os-release | grep '^NAME' | awk -F=  '{ print $2 }' | tr -d \"`
+            PSEUDONAME=`cat /etc/os-release | grep '^ID=' | awk -F=  '{ print $2 }' | tr -d \"`
+            REV=`cat /etc/debian_version`
+        fi
 
-# install latest version available of git
-nala install git --assume-yes
+        OS=`lowercase $OS`
+        DistroBasedOn=`lowercase $DistroBasedOn`
+
+        readonly OS
+        readonly DIST
+        readonly DistroBasedOn
+        readonly PSEUDONAME
+        readonly REV
+        readonly KERNEL
+        readonly MACH
+    fi
+
+fi
+echo -e "OS:\t$OS"
+echo -e "DIST:\t$DIST"
+echo -e "DistroBasedOn:\t$DistroBasedOn"
+echo -e "PSEUDONAME:\t$PSEUDONAME"
+echo -e "REV:\t$REV"
+echo -e "KERNEL:\t$KERNEL"
+echo -e "MACH:\t$MACH"
+
+
+case $DistroBasedOn in
+  'debian')
+    # get latest packages
+    apt update
+
+    # install alternative package manager
+    apt install nala
+
+    # get latest packages
+    nala upgrade --assume-yes
+
+    # install latest version available of git
+    nala install git --assume-yes;;
+  
+  'RedHat')
+    echo 'RedHat support not ready'
+    exit -2;;
+
+  'SuSe')
+    echo 'SuSe support not ready'
+    exit -2;;
+esac
+
 
 
 # create folder and move into $HOME/src/$USER
